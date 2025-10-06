@@ -150,17 +150,15 @@ const buildGrid = () => {
 // Функция для вычисления меток месяцев
 const calculateMonthLabels = () => {
     monthLabels.value = Array(51).fill("");
-    let prevMonth = "";
+    let prevMonth = null;
 
     for (let col = 0; col < 51; col++) {
-        for (let row = 0; row < 7; row++) {
-            const date = grid.value[row][col].date;
-            const curMonth = format(date, "MMM", { locale: ru });
-            if (curMonth !== prevMonth) {
-                monthLabels.value[col] = curMonth;
-                prevMonth = curMonth;
-                break;
-            }
+        const date = grid.value[0][col].date; // Используем первую строку для определения месяца
+        const curMonth = format(date, "MMM", { locale: ru });
+
+        if (prevMonth === null || curMonth !== prevMonth) {
+            monthLabels.value[col] = curMonth;
+            prevMonth = curMonth;
         }
     }
 };
@@ -221,7 +219,7 @@ const hideLegendTooltip = () => (hoverLegendCell.value = null);
 
 .months-row {
     display: flex;
-    margin-left: 40px;
+    margin-left: 0px;
     margin-bottom: 2px;
 }
 
